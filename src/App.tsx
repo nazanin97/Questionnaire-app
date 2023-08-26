@@ -3,24 +3,32 @@ import questions from './questions.json';
 import Button from "./components/Button";
 
 function App() {
+   // State to manage the current question's index
   const [questionIndex, setQuestionIndex] = useState(0)
+
   let currentQuestion = questions[questionIndex]
 
+  // Structure of the answers state
   type AnswerState = {
     [key: number]: string | string[];
   };
   const [answers, setAnswers] = useState<AnswerState>({});
 
+  // Handler function to manage the button actions
   const handleClick = async (action: string) => {
     if (action === "next") {
+      // Check if the answer is mandatory and not provided
       if (currentQuestion.mandatory && answers[currentQuestion.id] === undefined){
         alert("Answer required!")
       } else {
+        // Move to the next question
         setQuestionIndex(questionIndex + 1)
       }
     } else if (action === "back") {
+      // Move to the previous question
       setQuestionIndex(questionIndex - 1)
     } else if (action === "submit") {
+      // Submit answers to the API
       console.log(answers)
       try {
         const response = await fetch('http://api_url', {
@@ -41,6 +49,8 @@ function App() {
     }
   };
 
+
+  // Render function for select input
   const renderSelect = () => {  
     return (
       <select 
@@ -54,6 +64,7 @@ function App() {
     );
   }
 
+  // Render function for checkbox input
   const renderFormCheck = () => (
     <div>
       {currentQuestion.options.map(item => 
@@ -82,6 +93,7 @@ function App() {
     </div>
   );
 
+  // Render function for text input
   const renderFormControl = () => (
     <input className="form-control form-control-lg" type="text"
     value={answers[currentQuestion.id] || ''}
