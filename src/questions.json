@@ -1,0 +1,25 @@
+[
+    {
+        "id" : 1,
+        "question": "What is your name?",
+        "type": "form-control",
+        "options": [],
+        "mandatory": true
+    },
+    {
+        "id" : 2,
+        "question": "What is your favorite color?",
+        "type": "form-check",
+        "options": ["blue", "red", "green", "pink"],
+        "mandatory": false
+
+    },
+    {
+        "id" : 3,
+        "question": "What is your favorite food?",
+        "type": "form-select",
+        "options": ["pasta", "pizza", "burger"],
+        "mandatory": false
+
+    }
+]
