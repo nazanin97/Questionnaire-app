@@ -1,5 +1,12 @@
 [
     {
+        "id": 0,
+        "question": "What is your email?",
+        "type": "form-control2",
+        "options": [],
+        "mandatory": true
+    },
+    {
         "id" : 1,
         "question": "What is your name?",
         "type": "form-control",
@@ -10,7 +17,7 @@
         "id" : 2,
         "question": "What is your favorite color?",
         "type": "form-check",
-        "options": ["blue", "red", "green", "pink"],
+        "options": ["Blue", "Red", "Green", "Pink"],
         "mandatory": false
 
     },
@@ -18,8 +25,9 @@
         "id" : 3,
         "question": "What is your favorite food?",
         "type": "form-select",
-        "options": ["pasta", "pizza", "burger"],
+        "options": ["Pasta", "Pizza", "Burger"],
         "mandatory": false
 
     }
+    
 ]

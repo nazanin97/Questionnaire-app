@@ -2,6 +2,7 @@ import { useState } from "react";
 import questions from './questions.json';
 import Button from "./components/Button";
 
+
 function App() {
    // State to manage the current question's index
   const [questionIndex, setQuestionIndex] = useState(0)
@@ -18,11 +19,24 @@ function App() {
   const handleClick = async (action: string) => {
     if (action === "next") {
       // Check if the answer is mandatory and not provided
-      if (currentQuestion.mandatory && answers[currentQuestion.id] === undefined){
+      console.log(answers[currentQuestion.id])
+      if (currentQuestion.mandatory && (answers[currentQuestion.id] === undefined  || answers[currentQuestion.id] === "")){
         alert("Answer required!")
-      } else {
+      }
+      if (currentQuestion.type === "form-control2") {
+        let matchString = String(answers[currentQuestion.id])
+        .toLowerCase()
+        .match(
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        );
+        if (matchString) 
+          setQuestionIndex(questionIndex + 1)
+        else 
+          alert("format not correct!")
+      }
+      else {
         // Move to the next question
-        setQuestionIndex(questionIndex + 1)
+          setQuestionIndex(questionIndex + 1)
       }
     } else if (action === "back") {
       // Move to the previous question
@@ -41,7 +55,6 @@ function App() {
     
         const result = await response.json();
         console.log(result);
-        return result;
       } catch (error) {
         console.error("Error submitting: ", error);
         throw error;
@@ -100,6 +113,14 @@ function App() {
     onChange={(e) => setAnswers(prev => ({ ...prev, [currentQuestion.id]: e.target.value }))} />
   )
 
+    // Render function for text input
+    const renderFormControl2 = () => (
+      
+      <input className="form-control form-control-lg" type="email"
+      value={answers[currentQuestion.id] || ''}
+      onChange={(e) => setAnswers(prev => ({ ...prev, [currentQuestion.id]: e.target.value }))} />
+    )
+
   return (
     <div className="d-flex flex-column min-vh-100 justify-content-center bg-light">
       
@@ -108,6 +129,15 @@ function App() {
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-md-6">
+
+
+          {currentQuestion.type === "form-control2" && (
+              <div className="form-group">
+                {renderFormControl2()}
+              </div>
+            )}
+
+
             {currentQuestion.type === "form-select" && (
               <div className="form-group">
                 {renderSelect()}
@@ -125,7 +155,14 @@ function App() {
                 {renderFormCheck()}
               </div>
             )}
+
+            
+
+
+
           </div>
+
+
         </div>
       </div>
 
